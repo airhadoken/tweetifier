@@ -11,6 +11,9 @@
 
   function processText() {
     var value = input.value;
+    if(value.charAt(value.length - 1) !== "\n") {
+      value += "\n";
+    }
     var outValue = "";
     var len = value.length;
     var i = 0;

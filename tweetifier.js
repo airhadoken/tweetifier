@@ -1,9 +1,11 @@
 ;(function(root) {
+  var tweetLength = 140;
 
   var document = root.document;
 
   var input = document.getElementById("input");
   var output = document.getElementById("output");
+  var tweetlength = document.getElementById("tweetlength");
 
   var shortlines = document.getElementById("shortlines");
 
@@ -22,11 +24,11 @@
       if(nextnl === i) {
         nextLine = "";
         i++;
-      } else if(shortlines.checked && nextnl - i <= 140 && nextnl > -1) {
+      } else if(shortlines.checked && nextnl - i <= tweetLength && nextnl > -1) {
         nextLine = value.substring(i, nextnl).trim();
         i = nextnl;
-      } else if(nextnl - i > 140 || !shortlines.checked) {
-        nextLine = value.substr(i, 140);
+      } else if(nextnl - i > tweetLength || !shortlines.checked) {
+        nextLine = value.substr(i, tweetLength);
         leftPadding = (/^\s+/g.exec(nextLine) || [""])[0].length;
         lastSpaceInLine = (lastSpaceRegex.exec(nextLine) || [""])[0].length;
         nextLine = nextLine.substr(0, lastSpaceInLine);
@@ -49,6 +51,11 @@
   input.addEventListener("keyup", processText);
   input.addEventListener("change", processText);
   shortlines.addEventListener("change", processText);
+  tweetlength.addEventListener("change", function(ev) {
+    tweetLength = +ev.target.value;
+    processText()
+  });
+
 
   processText();
 })(this);

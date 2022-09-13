@@ -20,11 +20,10 @@
     var nextLine;
     var lastSpaceInLine, leftPadding;
     var lastSpaceRegex = shortlines.checked ? /^.*\s+/ : /^(?:.|\n)*\s+/m;
-    var appendage = "";
+    var nextAppend = 1;
+    var appendage = appendnumber.checked ? " " + nextAppend + "/" : "";
     
     while(i < len) {
-      appendage = appendnumber.checked ? " " + (i + 1) + "/" : ""; 
-      
       var nextnl = value.indexOf('\n', i);
       if(nextnl === i) {
         nextLine = "";
@@ -48,6 +47,8 @@
       nextLine = nextLine.trim();
       if(nextLine) {
         outValue += nextLine + appendage + "\n";
+        nextAppend++;
+        appendage = appendnumber.checked ? " " + nextAppend + "/" : ""; ;
       }
     }
     output.value = outValue;

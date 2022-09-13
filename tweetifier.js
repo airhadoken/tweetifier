@@ -5,8 +5,8 @@
 
   var input = document.getElementById("input");
   var output = document.getElementById("output");
-  var tweetlength = document.getElementById("tweetlength");
 
+  var appendnumber = document.getElementById("appendnumber");
   var shortlines = document.getElementById("shortlines");
 
   function processText() {
@@ -20,18 +20,20 @@
     var nextLine;
     var lastSpaceInLine, leftPadding;
     var lastSpaceRegex = shortlines.checked ? /^.*\s+/ : /^(?:.|\n)*\s+/m;
-
+    var appendage = appendnumber.checked ? " " + (i + 1) + "/" : "";
+    
     while(i < len) {
-
+       
+      
       var nextnl = value.indexOf('\n', i);
       if(nextnl === i) {
         nextLine = "";
         i++;
-      } else if(shortlines.checked && nextnl - i <= tweetLength && nextnl > -1) {
+      } else if(shortlines.checked && nextnl - i <= (tweetLength - appendage.length) && nextnl > -1) {
         nextLine = value.substring(i, nextnl).trim();
         i = nextnl;
-      } else if(nextnl - i > tweetLength || !shortlines.checked) {
-        nextLine = value.substr(i, tweetLength);
+      } else if(nextnl - i > (tweetLength - appendage.length) || !shortlines.checked) {
+        nextLine = value.substr(i, tweetLength - appendage.length);
         leftPadding = (/^\s+/g.exec(nextLine) || [""])[0].length;
         lastSpaceInLine = (lastSpaceRegex.exec(nextLine) || [""])[0].length;
         nextLine = nextLine.substr(0, lastSpaceInLine);
@@ -45,7 +47,7 @@
 
       nextLine = nextLine.trim();
       if(nextLine) {
-        outValue += nextLine + "\n";
+        outValue += nextLine + appendage + "\n";
       }
     }
     output.value = outValue;
@@ -54,11 +56,7 @@
   input.addEventListener("keyup", processText);
   input.addEventListener("change", processText);
   shortlines.addEventListener("change", processText);
-  tweetlength.addEventListener("change", function(ev) {
-    tweetLength = +ev.target.value;
-    processText()
-  });
-
+  appendnumber.addEventListener("change", processText);
 
   processText();
 })(this);

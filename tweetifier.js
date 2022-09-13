@@ -1,5 +1,5 @@
 ;(function(root) {
-  var tweetLength = 140;
+  var tweetLength = 280;
 
   var document = root.document;
 

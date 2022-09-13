@@ -20,10 +20,10 @@
     var nextLine;
     var lastSpaceInLine, leftPadding;
     var lastSpaceRegex = shortlines.checked ? /^.*\s+/ : /^(?:.|\n)*\s+/m;
-    var appendage = appendnumber.checked ? " " + (i + 1) + "/" : "";
+    var appendage = "";
     
     while(i < len) {
-       
+      appendage = appendnumber.checked ? " " + (i + 1) + "/" : ""; 
       
       var nextnl = value.indexOf('\n', i);
       if(nextnl === i) {
